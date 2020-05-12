@@ -5,20 +5,22 @@ import java.util.Scanner;
 
 public class RoadController
 {
+    //начало объявление переменных double и int
     private static double passengerCarMaxWeight = 3500.0; // kg
     private static int passengerCarMaxHeight = 2000; // mm
-    private static int controllerMaxHeight = 4000; // mm
+    private static int controllerMaxHeight = 3500; // mm
 
     private static int passengerCarPrice = 100; // RUB
     private static int cargoCarPrice = 250; // RUB
     private static int vehicleAdditionalPrice = 200; // RUB
+    //окончание объявления переменных double и int
 
     public static void main(String[] args)
     {
         System.out.println("Сколько автомобилей сгенерировать?");
 
         Scanner scanner = new Scanner(System.in);
-        int carsCount = scanner.nextInt();
+        int carsCount = scanner.nextInt();//объявление переменной int
 
         for(int i = 0; i < carsCount; i++)
         {
@@ -32,7 +34,7 @@ public class RoadController
             }
 
             //Проверяем высоту и массу автомобиля, вычисляем стоимость проезда
-            int price = calculatePrice(car);
+            int price = calculatePrice(car); //объявление переменной int
             if(price == -1) {
                 continue;
             }
@@ -46,8 +48,8 @@ public class RoadController
      */
     private static int calculatePrice(Car car)
     {
-        int carHeight = car.height;
-        int price = 0;
+        int carHeight = car.height; //объявление переменной int
+        int price = 0; //объявление переменной int
         if (carHeight > controllerMaxHeight)
         {
             blockWay("высота вашего ТС превышает высоту пропускного пункта!");
@@ -55,18 +57,18 @@ public class RoadController
         }
         else if (carHeight > passengerCarMaxHeight)
         {
-            double weight = car.weight;
+            double weight = car.weight;//объявление переменной double
             //Грузовой автомобиль
             if (weight > passengerCarMaxWeight)
             {
-                price = passengerCarPrice;
+                price = cargoCarPrice;
                 if (car.hasVehicle) {
                     price = price + vehicleAdditionalPrice;
                 }
             }
             //Легковой автомобиль
             else {
-                price = cargoCarPrice;
+                price = passengerCarPrice;
             }
         }
         else {
