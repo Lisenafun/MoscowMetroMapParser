@@ -18,6 +18,12 @@ public class Cat
         count++;
     }
 
+    public Cat(Cat otherCat){
+        this.weight = otherCat.weight;
+        originWeight = this.weight;
+        count++;
+    }
+
     public Cat(double originWeight) {
         if(originWeight < MIN_WEIGHT || originWeight > MAX_WEIGHT){
             System.out.println ("Cat can not create, cat weight must be more than 1000 and less than 9000.\nThis cat dead.");
@@ -32,9 +38,7 @@ public class Cat
     {
         if (isAlive ()) {
             weight = weight - 1;
-            if (weight < MIN_WEIGHT || weight > MAX_WEIGHT) {
-                count--;
-            }
+            checkCount ();
             System.out.println ("Meow");
         }else{
             System.out.println ("Cat exploded or dead");
@@ -46,9 +50,7 @@ public class Cat
         if(isAlive ()) {
             weight = weight + amount;
             feedAmount = feedAmount + amount;
-            if (weight < MIN_WEIGHT || weight > MAX_WEIGHT) {
-                count--;
-            }
+            checkCount ();
         }else{
             System.out.println ("Cat exploded or dead");
         }
@@ -58,9 +60,7 @@ public class Cat
     {
         if(isAlive ()) {
             weight = weight + amount;
-            if (weight < MIN_WEIGHT || weight > MAX_WEIGHT) {
-                count--;
-            }
+            checkCount ();
         }else{
             System.out.println ("Cat exploded or dead");
         }
@@ -69,9 +69,7 @@ public class Cat
     public void pee(){
         if(isAlive ()){
             weight = weight - 150;
-            if(weight < MIN_WEIGHT || weight > MAX_WEIGHT) {
-                count--;
-            }
+            checkCount ();
             System.out.println("pee");
         }else{
             System.out.println ("Cat exploded or dead");
@@ -94,11 +92,17 @@ public class Cat
         }
     }
 
-    public static Cat doCopy(Cat copyCat){
-        Cat cat = copyCat;
-        count++;
-        return cat;
+    public void checkCount(){
+        if(weight < MIN_WEIGHT || weight > MAX_WEIGHT) {
+            count--;
+        }
     }
+
+//    public static Cat doCopy(Cat copyCat){
+//        Cat cat = copyCat;
+//        count++;
+//        return cat;
+//    }
 
     public Double getWeight()
     {

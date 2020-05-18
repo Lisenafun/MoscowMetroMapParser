@@ -68,7 +68,7 @@ public class Loader
         System.out.println ("Cat count: " + Cat.getCount ());
 
         //создание копии кошки
-        Cat frank = Cat.doCopy (fred);
+        Cat frank = new Cat (fred);
         System.out.println ("frank " + frank.getStatus () + " " + frank.getWeight ());
         System.out.println ("fred " + fred.getStatus () + " " + fred.getWeight ());
         System.out.println ("Cat count: " + Cat.getCount ());
