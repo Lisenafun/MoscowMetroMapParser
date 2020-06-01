@@ -20,6 +20,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="74551ef3-e027-45c0-ba92-5e70ee5f73c4" name="Default" comment="homework 4.5 done">
+      <change afterPath="$PROJECT_DIR$/../../06_InheritanceAndPolymorphism/AccountBank/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../06_InheritanceAndPolymorphism/AccountBank/src/AccountBank.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../06_InheritanceAndPolymorphism/AccountBank/src/CardAccount.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../06_InheritanceAndPolymorphism/AccountBank/src/DepositAccount.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../06_InheritanceAndPolymorphism/AccountBank/src/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -244,6 +249,7 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="Vcs.Log.UiProperties">
     <option name="RECENTLY_FILTERED_USER_GROUPS">
