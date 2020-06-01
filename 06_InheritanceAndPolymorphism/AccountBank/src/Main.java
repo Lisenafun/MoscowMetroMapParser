@@ -1,3 +1,7 @@
+import bank.AccountBank;
+import bank.CardAccount;
+import bank.DepositAccount;
+
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
@@ -19,15 +23,15 @@ public class Main {
         //Проверка работы класса с депозитным счетом
         DepositAccount depositAccount = new DepositAccount(1000);
         depositAccount.accountStatement();
-        System.out.println("Дата последнего пополнения: " + depositAccount.lastDatePut.getTime());
+        System.out.println("Дата последнего пополнения: " + depositAccount.getLastDatePut().getTime());
         depositAccount.withdrawMoney(500);
         System.out.println();
 
         //Создаем иллюзию того, что прошло больше месяца со дня последнего пополнения
         Calendar lastMoneyPut = new GregorianCalendar(2020, Calendar.APRIL, 4);
-        depositAccount.putMoney(1000, lastMoneyPut);
+        depositAccount.setLastDatePut(lastMoneyPut);
         depositAccount.accountStatement();
-        System.out.println("Дата последнего пополнения: " + depositAccount.lastDatePut.getTime());
+        System.out.println("Дата последнего пополнения: " + depositAccount.getLastDatePut().getTime());
         depositAccount.withdrawMoney(500);
         depositAccount.accountStatement();
         System.out.println();

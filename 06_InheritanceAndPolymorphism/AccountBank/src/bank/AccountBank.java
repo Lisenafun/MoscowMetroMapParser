@@ -1,11 +1,13 @@
+package bank;
+
 import java.util.Calendar;
 
 public class AccountBank {
 
-    public int number;
-    public double account;
-    public Calendar lastDatePut;
-    public Calendar lastDateWithdraw;
+    private final int number;
+    private double account;
+    private Calendar lastDatePut;
+    private Calendar lastDateWithdraw;
 
     public AccountBank(double account) {
         number = 1000000 + (int) Math.round(Math.random() * 1000000);
@@ -29,5 +31,30 @@ public class AccountBank {
             lastDateWithdraw = Calendar.getInstance();
             account = account - countOfMoney;
         }
+    }
+
+    public double getAccount() {
+        return account;
+    }
+
+    protected void setAccount(double account) {
+        this.account = account;
+    }
+
+    public Calendar getLastDatePut() {
+        return lastDatePut;
+    }
+
+    //Оставила метод для проверки класса с депозитным счетом, иначе этот метод необходимо удалить
+    public void setLastDatePut(Calendar lastDatePut) {
+        this.lastDatePut = lastDatePut;
+    }
+
+    public Calendar getLastDateWithdraw() {
+        return lastDateWithdraw;
+    }
+
+    public int getNumber() {
+        return number;
     }
 }

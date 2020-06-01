@@ -1,3 +1,5 @@
+package bank;
+
 public class CardAccount extends AccountBank {
 
     public CardAccount(double account) {
@@ -8,6 +10,6 @@ public class CardAccount extends AccountBank {
     public void withdrawMoney(double countOfMoney) {
         super.withdrawMoney(countOfMoney);
         double percent = countOfMoney / 100;
-        account = account - percent;
+        setAccount(getAccount() - percent);
     }
 }
