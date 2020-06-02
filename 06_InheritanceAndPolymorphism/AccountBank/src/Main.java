@@ -1,45 +1,30 @@
-import bank.AccountBank;
-import bank.CardAccount;
-import bank.DepositAccount;
-
-import java.util.Calendar;
-import java.util.GregorianCalendar;
+import bankClients.Client;
+import bankClients.IndividualEntrepreneur;
+import bankClients.Individuals;
+import bankClients.Legals;
 
 public class Main {
     public static void main(String[] args) {
 
-        //Проверяем работу методов родительского класса
-        AccountBank accountBank = new AccountBank(1000);
-        accountBank.putMoney(1000);
-        accountBank.accountStatement();
-        accountBank.withdrawMoney(500);
-        accountBank.accountStatement();
-        System.out.println();
+        Individuals individuals = new Individuals(1000);
+        System.out.println("Счет физического лица: " + individuals.getAccount());
+        individuals.putMoney(500);
+        System.out.println("Счет физического лица после пополнения: " + individuals.getAccount());
+        individuals.takeMoney(600);
+        System.out.println("Счет физического лица после снятия: " + individuals.getAccount());
 
-        //Проверяем можно ли снять больше средств, чем находится на счету.
-        accountBank.withdrawMoney(1700);
-        System.out.println();
+        Client legals = new Legals(20000);
+        System.out.println("Счет юридического лица: " + legals.getAccount());
+        legals.putMoney(1000);
+        System.out.println("Счет юридического лица после пополнения: " + legals.getAccount());
+        legals.takeMoney(2000);
+        System.out.println("Счет юридического лица после снятия: " + legals.getAccount());
 
-        //Проверка работы класса с депозитным счетом
-        DepositAccount depositAccount = new DepositAccount(1000);
-        depositAccount.accountStatement();
-        System.out.println("Дата последнего пополнения: " + depositAccount.getLastDatePut().getTime());
-        depositAccount.withdrawMoney(500);
-        System.out.println();
-
-        //Создаем иллюзию того, что прошло больше месяца со дня последнего пополнения
-        Calendar lastMoneyPut = new GregorianCalendar(2020, Calendar.APRIL, 4);
-        depositAccount.setLastDatePut(lastMoneyPut);
-        depositAccount.accountStatement();
-        System.out.println("Дата последнего пополнения: " + depositAccount.getLastDatePut().getTime());
-        depositAccount.withdrawMoney(500);
-        depositAccount.accountStatement();
-        System.out.println();
-
-        //Проверка работы класса с карточным счетом
-        CardAccount cardAccount = new CardAccount(1000);
-        cardAccount.accountStatement();
-        cardAccount.withdrawMoney(100);
-        cardAccount.accountStatement();
+        Client indEntrepreneur = new IndividualEntrepreneur(50000);
+        System.out.println("Счет индивидуального предпринимателя: " + indEntrepreneur.getAccount());
+        indEntrepreneur.putMoney(10000);
+        System.out.println("Счет индивидуального предпринимателя после пополнения: " + indEntrepreneur.getAccount());
+        indEntrepreneur.takeMoney(5000);
+        System.out.println("Счет индивидуального предпринимателя после снятия: " + indEntrepreneur.getAccount());
     }
 }
