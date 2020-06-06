@@ -1,4 +1,3 @@
-import bankClients.Client;
 import bankClients.IndividualEntrepreneur;
 import bankClients.Individuals;
 import bankClients.Legals;
@@ -13,14 +12,14 @@ public class Main {
         individuals.takeMoney(600);
         System.out.println("Счет физического лица после снятия: " + individuals.getAccount());
 
-        Client legals = new Legals(20000);
+        Legals legals = new Legals(20000);
         System.out.println("Счет юридического лица: " + legals.getAccount());
         legals.putMoney(1000);
         System.out.println("Счет юридического лица после пополнения: " + legals.getAccount());
         legals.takeMoney(2000);
         System.out.println("Счет юридического лица после снятия: " + legals.getAccount());
 
-        Client indEntrepreneur = new IndividualEntrepreneur(50000);
+        IndividualEntrepreneur indEntrepreneur = new IndividualEntrepreneur(50000);
         System.out.println("Счет индивидуального предпринимателя: " + indEntrepreneur.getAccount());
         indEntrepreneur.putMoney(10000);
         System.out.println("Счет индивидуального предпринимателя после пополнения: " + indEntrepreneur.getAccount());

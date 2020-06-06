@@ -14,11 +14,6 @@ public class IndividualEntrepreneur extends Client {
         } else {
             moneyMinusPercent = money - (money * 0.005);
         }
-        account = account + moneyMinusPercent;
-    }
-
-    @Override
-    public void takeMoney(double money) {
-        account = account - money;
+        super.putMoney(moneyMinusPercent);
     }
 }

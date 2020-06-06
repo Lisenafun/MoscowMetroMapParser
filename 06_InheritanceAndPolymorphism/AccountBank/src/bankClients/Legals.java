@@ -7,13 +7,7 @@ public class Legals extends Client {
     }
 
     @Override
-    public void putMoney(double money) {
-        account = account + money;
-    }
-
-    @Override
     public void takeMoney(double money) {
-        double moneyPlusPercent = money + (money * 0.01);
-        account = account - moneyPlusPercent;
+        super.takeMoney(money + (money * 0.01));
     }
 }

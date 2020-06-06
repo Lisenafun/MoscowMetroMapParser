@@ -1,10 +1,10 @@
 package bankClients;
 
-public abstract class Client {
+abstract class Client {
 
-    protected double account;
+    private double account;
 
-    public Client(double account) {
+    protected Client(double account) {
         this.account = account;
     }
 
@@ -12,7 +12,11 @@ public abstract class Client {
         return account;
     }
 
-    public abstract void putMoney(double money);
+    public void putMoney(double money) {
+        account = account + money;
+    }
 
-    public abstract void takeMoney(double money);
+    public void takeMoney(double money) {
+        account = account - money;
+    }
 }
