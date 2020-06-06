@@ -8,8 +8,6 @@ public class CardAccount extends AccountBank {
 
     @Override
     public void withdrawMoney(double countOfMoney) {
-        super.withdrawMoney(countOfMoney);
-        double percent = countOfMoney / 100;
-        setAccount(getAccount() - percent);
+        super.withdrawMoney(countOfMoney + (countOfMoney * 0.01));
     }
 }

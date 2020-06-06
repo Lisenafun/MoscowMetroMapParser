@@ -37,10 +37,6 @@ public class AccountBank {
         return account;
     }
 
-    protected void setAccount(double account) {
-        this.account = account;
-    }
-
     public Calendar getLastDatePut() {
         return lastDatePut;
     }
