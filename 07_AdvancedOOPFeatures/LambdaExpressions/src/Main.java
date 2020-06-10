@@ -11,7 +11,7 @@ public class Main {
     public static void main(String[] args) {
         ArrayList<Employee> staff = loadStaffFromFile();
 
-        staff.stream().sorted(Comparator.comparing(Employee::getName).thenComparingInt(Employee::getSalary)).forEach(System.out::println);
+        staff.stream().sorted(Comparator.comparing(Employee::getName).thenComparing(Employee::getSalary)).forEach(System.out::println);
         System.out.println();
         staff.stream().sorted(Comparator.comparingInt(Employee::getSalary).thenComparing(Employee::getName)).forEach(System.out::println);
 
