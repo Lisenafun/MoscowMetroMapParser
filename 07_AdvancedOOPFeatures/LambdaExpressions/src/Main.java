@@ -9,12 +9,18 @@ public class Main {
     private static String dateFormat = "dd.MM.yyyy";
 
     public static void main(String[] args) {
+
         ArrayList<Employee> staff = loadStaffFromFile();
 
+        //Сортировка по алфавиту и зарплате
         staff.stream().sorted(Comparator.comparing(Employee::getName).thenComparing(Employee::getSalary)).forEach(System.out::println);
-        System.out.println();
-        staff.stream().sorted(Comparator.comparingInt(Employee::getSalary).thenComparing(Employee::getName)).forEach(System.out::println);
 
+        //Вывод сотрудника с самой высокой зарплатой, получившего работу в 2017 году
+        staff.stream().filter(employee -> {
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(employee.getWorkStart());
+            return cal.get(Calendar.YEAR) == 2017;
+        }).max(Comparator.comparing(Employee::getSalary)).ifPresent(System.out::println);
     }
 
     private static ArrayList<Employee> loadStaffFromFile() {
