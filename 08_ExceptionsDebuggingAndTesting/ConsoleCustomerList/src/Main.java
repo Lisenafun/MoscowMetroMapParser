@@ -27,7 +27,7 @@ public class Main {
                 } else {
                     System.out.println(commandError);
                 }
-            } catch(IllegalArgumentException ex) {
+            } catch(CustomerStorageException ex) {
                 System.out.println(ex.getMessage());
             }
         }

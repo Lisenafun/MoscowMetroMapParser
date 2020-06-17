@@ -9,7 +9,7 @@ public class CustomerStorage {
         storage = new HashMap<>();
     }
 
-    public void addCustomer(String data) {
+    public void addCustomer(String data) throws CustomerStorageException{
         String[] components = data.split("\\s+");
         if(components.length == 4) {
             String name = components[0] + " " + components[1];
@@ -22,10 +22,10 @@ public class CustomerStorage {
             if(emailMatches & phoneMatches) {
                 storage.put(name, new Customer(name, components[3], components[2]));
             } else {
-                throw new IllegalArgumentException("Wrong format email or phone. \nCorrect email format: vasily.petrov@gmail.com\nCorrect phone format: +79215637722.");
+                throw new CustomerStorageException("Wrong format email or phone. \nCorrect email format: vasily.petrov@gmail.com\nCorrect phone format: +79215637722.");
             }
         } else {
-            throw new IllegalArgumentException("Wrong format. Correct format: \nadd Василий Петров vasily.petrov@gmail.com +79215637722");
+            throw new CustomerStorageException("Wrong format. Correct format: \nadd Василий Петров vasily.petrov@gmail.com +79215637722");
         }
     }
 
@@ -33,12 +33,12 @@ public class CustomerStorage {
         storage.values().forEach(System.out::println);
     }
 
-    public void removeCustomer(String name) {
+    public void removeCustomer(String name) throws CustomerStorageException{
         String[] components = name.split("\\s+");
         if(components.length == 2) {
             storage.remove(name);
         } else {
-            throw new IllegalArgumentException("Wrong format. Correct format: \n remove Василий Петров");
+            throw new CustomerStorageException("Wrong format. Correct format: \n remove Василий Петров");
         }
     }
 
