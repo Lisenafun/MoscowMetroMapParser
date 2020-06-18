@@ -48,12 +48,22 @@ public class RouteCalculatorTest extends TestCase {
         for(int i = 6; i < 9; i++) {
             blueLine.addStation(stations.get(i));
         }
+
+        List<Station> connection1 = new ArrayList<>();
+        connection1.add(new Station("Квадратная", redLine));
+        connection1.add(new Station("Квадратная", whiteLine));
+
+        List<Station> connection2 = new ArrayList<>();
+        connection2.add(new Station("Прямоугольная", whiteLine));
+        connection2.add(new Station("Прямоугольная", blueLine));
+
         stationIndex = new StationIndex();
 
         stationIndex.addLine(redLine);
         stationIndex.addLine(whiteLine);
         stationIndex.addLine(blueLine);
-        stationIndex.addConnection(stations);
+        stationIndex.addConnection(connection1);
+        stationIndex.addConnection(connection2);
     }
 
     @Override
