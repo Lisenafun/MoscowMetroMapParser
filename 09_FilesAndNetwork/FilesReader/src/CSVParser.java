@@ -1,7 +1,9 @@
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class CSVParser {
 
@@ -12,8 +14,8 @@ public class CSVParser {
             System.out.println("Сумма доходов: " + getIncome(CSV_PATH) + " " + getCurrencyValue(CSV_PATH));
             System.out.println("Сумма расходов: " + getOutcome(CSV_PATH) + " " + getCurrencyValue(CSV_PATH));
             System.out.println("Сумма расходов по организациям:");
-            List<String> outcomeList = getOutcomeList(CSV_PATH);
-            outcomeList.forEach(s -> System.out.println(s + " руб."));
+            Map<String, Double> outcomeMap = getOutcomeMap(CSV_PATH);
+            outcomeMap.forEach((k, v) -> System.out.println(k + "\t" + v));
         } catch(Exception e) {
             e.printStackTrace();
         }
@@ -88,10 +90,10 @@ public class CSVParser {
         return outcome;
     }
 
-    public static List<String> getOutcomeList(String path) throws Exception {
+    public static Map<String, Double> getOutcomeMap(String path) throws Exception {
         List<String> files = Files.readAllLines(Paths.get(path));
         files.remove(0);
-        List<String> dataListOutcome = new ArrayList<>();
+        Map<String, Double> mapOutcome = new HashMap<>();
         for(String data : files) {
             String[] dataString = data.split(",");
             List<String> dataList = new ArrayList<>();
@@ -115,11 +117,16 @@ public class CSVParser {
                     String replace = dataList.get(5).replace("/", "\\");
                     String substring = replace.substring(replace.indexOf("\\"));
                     String place = substring.substring(0, substring.indexOf("  ")).trim();
-                    String out = dataList.get(7);
-                    dataListOutcome.add(place + "\t" + out);
+                    double out = Double.parseDouble(dataList.get(7));
+                    if(mapOutcome.containsKey(place)) {
+                        double outOld = mapOutcome.get(place);
+                        mapOutcome.replace(place, outOld + out);
+                    } else {
+                        mapOutcome.put(place, out);
+                    }
                 }
             }
         }
-        return dataListOutcome;
+        return mapOutcome;
     }
 }
