@@ -7,10 +7,11 @@ public class Metro {
 
     private JSONObject metroObject;
 
-    public Metro(JSONObject stationsObject, JSONArray linesArray) {
+    public Metro(JSONObject stationsObject, JSONArray linesArray, JSONArray connectionsArray) {
         metroObject = new JSONObject();
         metroObject.put("stations", stationsObject);
         metroObject.put("lines", linesArray);
+        metroObject.put("connections", connectionsArray);
     }
 
     public JSONObject getMetroObject() {

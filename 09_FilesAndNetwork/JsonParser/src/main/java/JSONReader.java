@@ -16,4 +16,12 @@ public class JSONReader {
             System.out.println("Линия " + k + ". Количество станций: " + stationsArray.size() + ".");
         });
     }
+
+    public void getNumberOfConnections(String path) throws Exception {
+        JSONParser parser = new JSONParser();
+        Object object = parser.parse(new FileReader(path));
+        JSONObject metroJsonObject = (JSONObject) object;
+        JSONArray connectionsArray = (JSONArray) metroJsonObject.get("connections");
+        System.out.println("Количество переходов в московском метро: " + connectionsArray.size() + ".");
+    }
 }
