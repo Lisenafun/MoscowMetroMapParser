@@ -1,4 +1,9 @@
+package data.entity;
+
+import data.CourseType;
+
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "Courses")
@@ -18,8 +23,8 @@ public class Course {
 
     private String description;
 
-    @Column(name = "teacher_id")
-    private int teacherId;
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Teacher teacher;
 
     @Column(name = "students_count")
     private Integer studentsCount;
@@ -28,6 +33,12 @@ public class Course {
 
     @Column(name = "price_per_hour")
     private float pricePerHour;
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "subscriptions",
+            joinColumns = {@JoinColumn(name = "course_id")},
+    inverseJoinColumns = {@JoinColumn(name = "student_id")})
+    private List<Student> students;
 
     public int getId() {
         return id;
@@ -69,12 +80,12 @@ public class Course {
         this.description = description;
     }
 
-    public int getTeacherId() {
-        return teacherId;
+    public Teacher getTeacher() {
+        return teacher;
     }
 
-    public void setTeacherId(int teacherId) {
-        this.teacherId = teacherId;
+    public void setTeacher(Teacher teacher) {
+        this.teacher = teacher;
     }
 
     public Integer getStudentsCount() {
@@ -101,8 +112,16 @@ public class Course {
         this.pricePerHour = pricePerHour;
     }
 
+    public List<Student> getStudents() {
+        return students;
+    }
+
+    public void setStudents(List<Student> students) {
+        this.students = students;
+    }
+
     @Override
     public String toString() {
-        return "Course{" + "id=" + id + ", name='" + name + '\'' + ", duration=" + duration + ", type=" + type + ", description='" + description + '\'' + ", teacherId=" + teacherId + ", studentsCount=" + studentsCount + ", price=" + price + ", pricePerHour=" + pricePerHour + '}';
+        return "data.entity.Course{" + "id=" + id + ", name='" + name + '\'' + ", duration=" + duration + ", type=" + type + ", description='" + description + '\'' + ", teacher=" + teacher.getName() + ", studentsCount=" + studentsCount + ", price=" + price + ", pricePerHour=" + pricePerHour + '}';
     }
 }
