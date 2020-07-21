@@ -2,10 +2,7 @@ package data.entity;
 
 import data.entityKey.KeyPurchaseList;
 
-import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity
@@ -56,10 +53,5 @@ public class PurchaseList {
 
     public void setSubscriptionDate(Date subscriptionDate) {
         this.subscriptionDate = subscriptionDate;
-    }
-
-    @Override
-    public String toString() {
-        return "data.entity.PurchaseList{" + "studentName='" + studentName + '\'' + ", courseName='" + courseName + '\'' + ", price=" + price + ", subscriptionDate=" + subscriptionDate + '}';
     }
 }

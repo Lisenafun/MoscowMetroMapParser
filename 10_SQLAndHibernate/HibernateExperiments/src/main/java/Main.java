@@ -1,7 +1,12 @@
+import data.entity.Course;
+import data.entity.LinkedPurchaseList;
 import data.entity.PurchaseList;
+import data.entity.Student;
 import org.hibernate.Session;
-import org.hibernate.query.Query;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.util.List;
 
 public class Main {
@@ -10,39 +15,29 @@ public class Main {
         HibernateConnection hConnection = HibernateConnection.getInstance();
         Session session = hConnection.getSession();
 
-//        String sql = "SELECT * FROM Courses";
-//        Query query = session.createSQLQuery(sql).addEntity(data.entity.Course.class);
-//        List<data.entity.Course> courseList = query.list();
-//        for(data.entity.Course course : courseList) {
-//            System.out.println("Название курса: " + course.getName() + ", количество студентов: " + course.getStudentsCount() + ".\n");
-//            List<data.entity.Student> students = course.getStudents();
-//            students.forEach(student -> System.out.println(student.getName()));
-//        }
+        String hqlPurchase = "FROM " + PurchaseList.class.getSimpleName();
+        List<PurchaseList> purchaseList = session.createQuery(hqlPurchase).getResultList();
 
-//        String sql = "SELECT * FROM Students";
-//        Query query = session.createSQLQuery(sql).addEntity(data.entity.Student.class);
-//        List<data.entity.Student> studentList = query.list();
-//
-//        for(data.entity.Student student: studentList){
-//            List<data.entity.Course> courses = student.getCourses();
-//            System.out.println("Имя студента: " + student.getName() + "\t\nСписок курсов:");
-//            courses.forEach(course -> System.out.println(course.getName()));
-//        }
+        session.beginTransaction();
+        for(PurchaseList purchase : purchaseList) {
+            CriteriaBuilder builder = session.getCriteriaBuilder();
+            CriteriaQuery<Course> courseQuery = builder.createQuery(Course.class);
+            Root<Course> courseRoot = courseQuery.from(Course.class);
+            courseQuery.select(courseRoot).where(builder.equal(courseRoot.get("name"), purchase.getCourseName()));
+            Course course = session.createQuery(courseQuery).getSingleResult();
 
-//        String sql = "SELECT * FROM Subscriptions";
-//        Query query = session.createSQLQuery(sql).addEntity(data.entity.Subscription.class);
-//        List<data.entity.Subscription> subscriptions = query.list();
-//        for(data.entity.Subscription subscription: subscriptions){
-//            System.out.println(subscription.getCourse().getName() + " - " + subscription.getStudent().getName());
-//        }
+            CriteriaQuery<Student> studentQuery = builder.createQuery(Student.class);
+            Root<Student> studentRoot = studentQuery.from(Student.class);
+            studentQuery.select(studentRoot).where(builder.equal(studentRoot.get("name"), purchase.getStudentName()));
+            Student student = session.createQuery(studentQuery).getSingleResult();
 
-        String sql = "SELECT * FROM Purchaselist";
-        Query query = session.createSQLQuery(sql).addEntity(PurchaseList.class);
-        List<PurchaseList> purchaseLists = query.list();
-        for(PurchaseList purchaseList: purchaseLists){
-            System.out.println(purchaseList.getCourseName() + " - " + purchaseList.getStudentName() + " - " + purchaseList.getSubscriptionDate());
+            LinkedPurchaseList linkedPurchaseList = new LinkedPurchaseList();
+            linkedPurchaseList.setId(new LinkedPurchaseList.Key(course.getId(), student.getId()));
+            linkedPurchaseList.setCourseId(course.getId());
+            linkedPurchaseList.setStudentId(student.getId());
+            session.save(linkedPurchaseList);
         }
-
+        session.getTransaction().commit();
         session.close();
         hConnection.closeSessionFactory();
     }
