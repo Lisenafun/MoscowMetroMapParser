@@ -1,35 +1,49 @@
 import bankSystem.Account;
 import bankSystem.Bank;
+import bankSystem.Client;
 import junit.framework.TestCase;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class BankTest extends TestCase {
 
     private Bank bank;
+    private List<Client> clients;
 
     @Override
     public void setUp() {
         bank = new Bank();
-
-        for(int i = 0; i < 1000; i++) {
-            Account account = new Account(String.valueOf(i), bank);
-            account.putMoney(10000000);
+        clients = new ArrayList<>();
+        int countProcessors = Runtime.getRuntime().availableProcessors();
+        for(int i = 0; i < countProcessors; i++) {
+            Client client = new Client(bank, 10000000);
+            clients.add(client);
         }
     }
 
-    public void testTransferLessThanFiftyThousand() {
-        for(int i = 0; i < 1000; i++) {
-            for(int j = 999; j >= 0; j--) {
-                int finalI = i;
-                int finalJ = j;
-                new Thread(() -> bank.transfer(String.valueOf(finalI), String.valueOf(finalJ), 5000));
+    public void testTransfer() {
+        List<Thread> threads = new ArrayList<>();
+        for(Client client : clients) {
+            Thread thread = new Thread(client);
+            threads.add(thread);
+            thread.start();
+        }
+
+        for(Thread thread : threads) {
+            try {
+                thread.join();
+            } catch(InterruptedException e) {
+                e.printStackTrace();
             }
         }
-        for(Map.Entry<String, Account> entry : bank.getAccounts().entrySet()) {
-            long actualMoney = bank.getBalance(entry.getValue().getAccNumber());
-            long expectedMoney = 10000000;
-            assertEquals(expectedMoney, actualMoney);
+        HashMap<String, Account> accounts = bank.getAccounts();
+        for(Map.Entry<String, Account> entry : accounts.entrySet()) {
+            Account account = entry.getValue();
+            boolean actual = account.isBlock();
+            assertTrue(actual);
         }
     }
 }

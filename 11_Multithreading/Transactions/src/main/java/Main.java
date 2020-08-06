@@ -1,24 +1,45 @@
 import bankSystem.Account;
 import bankSystem.Bank;
+import bankSystem.Client;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class Main {
     public static void main(String[] args) {
 
         Bank bank = new Bank();
-        Account account1 = new Account("1", bank);
-        Account account2 = new Account("2", bank);
-        Account account3 = new Account("3", bank);
+        List<Client> clients = new ArrayList<>();
+        int countProcessors = Runtime.getRuntime().availableProcessors();
+        for(int i = 0; i < countProcessors; i++) {
+            Client client = new Client(bank, 10000000);
+            clients.add(client);
+        }
 
-        account1.putMoney(10000000);
-        account2.putMoney(10000000);
-        account3.putMoney(10000000);
+        List<Thread> threads = new ArrayList<>(countProcessors);
+        for(Client client : clients) {
+            Thread thread = new Thread(client);
+            threads.add(thread);
+            thread.start();
+        }
 
-        bank.transfer("1", "2", 5000);
-        bank.transfer("2", "1", 5000);
-        bank.transfer("3", "1", 55000);
+        for(Thread thread : threads) {
+            try {
+                thread.join();
+            } catch(InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
 
-        System.out.println("Остаток на счете: " + account1.getAccNumber() + ": " + bank.getBalance("1"));
-        System.out.println("Остаток на счете: " + account2.getAccNumber() + ": " + bank.getBalance("2"));
-        System.out.println("Остаток на счете: " + account3.getAccNumber() + ": " + bank.getBalance("3"));
+        System.out.println("Все потоки завершены.");
+        HashMap<String, Account> accounts = bank.getAccounts();
+        for(Map.Entry<String, Account> entry : accounts.entrySet()) {
+            String accNumber = entry.getValue().getAccNumber();
+            System.out.println("Остаток на счете: " + accNumber + " - " + bank.getBalance(accNumber));
+            System.out.println("Статус счета " + accNumber + " - " + entry.getValue().isBlock());
+
+        }
     }
 }
