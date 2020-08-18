@@ -40,6 +40,7 @@ public class Account {
     }
 
     protected void putMoney(long money) {
+        bank.putIntoFund(money);
         if(block) {
             System.out.println("Счет " + accNumber + " заблокирован.");
         }
@@ -49,6 +50,7 @@ public class Account {
     }
 
     protected void takeMoney(long money) {
+        bank.takeFromFund(money);
         if(block) {
             System.out.println("Счет " + accNumber + " заблокирован.");
         }

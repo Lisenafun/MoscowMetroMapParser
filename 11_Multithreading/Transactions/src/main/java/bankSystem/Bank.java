@@ -4,10 +4,23 @@ import java.util.*;
 
 public class Bank {
     private final HashMap<String, Account> accounts;
+    private long fund;
     private final Random random = new Random();
 
     public Bank() {
         accounts = new HashMap<>();
+    }
+
+    public long getFund() {
+        return fund;
+    }
+
+    public void putIntoFund(long amount) {
+        this.fund += amount;
+    }
+
+    public void takeFromFund(long amount) {
+        this.fund -= amount;
     }
 
     public synchronized boolean isFraud() throws InterruptedException {

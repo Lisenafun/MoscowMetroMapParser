@@ -2,10 +2,7 @@ import bankSystem.Account;
 import bankSystem.Bank;
 import bankSystem.Client;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
@@ -17,6 +14,7 @@ public class Main {
             Client client = new Client(bank, 10000000);
             clients.add(client);
         }
+        System.out.println("Количество средств в Банке: " + bank.getFund());
 
         List<Thread> threads = new ArrayList<>(countProcessors);
         for(Client client : clients) {
@@ -25,6 +23,7 @@ public class Main {
             thread.start();
         }
 
+        //Метод join нам здесь нужен, чтобы дождаться завершения работы потоков и остальной код начал выполняться только после этого.
         for(Thread thread : threads) {
             try {
                 thread.join();
@@ -38,8 +37,7 @@ public class Main {
         for(Map.Entry<String, Account> entry : accounts.entrySet()) {
             String accNumber = entry.getValue().getAccNumber();
             System.out.println("Остаток на счете: " + accNumber + " - " + bank.getBalance(accNumber));
-            System.out.println("Статус счета " + accNumber + " - " + entry.getValue().isBlock());
-
         }
+        System.out.println("Количество средств в Банке после всех переводов: " + bank.getFund());
     }
 }
